@@ -12,7 +12,9 @@
 - [Infrastructure (Prod / Cloud) Virtualisation](#infrastructure-prod--cloud-virtualisation)
 - [OS Implementation and Systems](#os-implementation-and-systems)
 - [Mitigations](#mitigations)
-- [Cryptography, Authentication, Identity](#cryptography-authentication-identity)
+- [Cryptography](#cryptography)
+- [Authentication](#authentication)
+- [Identity](#identity)
 - [Malware & Reversing](#malware--reversing)
 - [Exploits](#exploits)
 - [Attack Structure](#attack-structure)
@@ -23,11 +25,11 @@
 - [Coding & Algorithms](#coding--algorithms)
 - [Security Themed Coding Challenges](#security-themed-coding-challenges)
 
-# Background
+## Background
 
 Where did these notes come from? See the [README](README.md).
 
-# Learning Tips
+## Learning Tips
 
 - [Learning How To Learn](https://www.coursera.org/learn/learning-how-to-learn) course on Coursera is amazing and very useful. Take the full course, or read this [summary](https://medium.com/learn-love-code/learnings-from-learning-how-to-learn-19d149920dc4) on Medium.
 
@@ -62,7 +64,7 @@ Where did these notes come from? See the [README](README.md).
   - You are more than your economic output, remember to separate your self worth from your paycheque.
   - See interviews for what they are - they are *not* a measure of you being "good enough".
 
-# Interviewing Tips
+## Interviewing Tips
 
 - **Interview questions**
   - Interview questions are intentionally vague. This is to encourage questions.
@@ -135,7 +137,7 @@ Where did these notes come from? See the [README](README.md).
 
 ### Interviewers are potential friends and they want to help you get the job, they are on your side. Let them help you, ask them questions, recite everything you know on a topic and *say your thought process out loud*
 
-# Networking
+## Networking
 
 - OSI Model
   - Application; layer 7 (and basically layers 5 & 6) (includes API, HTTP, etc).
@@ -264,7 +266,7 @@ Where did these notes come from? See the [README](README.md).
 - Root stores
 - CAM table overflow
 
-# Web Application
+## Web Application
 
 - Same origin policy
   - Only accept requests from the same origin domain.  
@@ -318,7 +320,7 @@ Where did these notes come from? See the [README](README.md).
 - SQLmap.
 - Malicious redirects.
 
-# Infrastructure (Prod / Cloud) Virtualisation
+## Infrastructure (Prod / Cloud) Virtualisation
 
 - Hypervisors.
 - Hyperjacking.
@@ -335,7 +337,7 @@ Where did these notes come from? See the [README](README.md).
   - Trusting the host but not the network.
 - Log4j vuln.
 
-# OS Implementation and Systems
+## OS Implementation and Systems
 
 - Privilege escalation techniques, and prevention.
 - Buffer Overflows.
@@ -353,7 +355,6 @@ Where did these notes come from? See the [README](README.md).
   - Samba (with SMB).
   - Buffer Overflows.
   - ROP.
-
 - *nix
   - SELinux.
   - Kernel, userspace, permissions.
@@ -367,7 +368,7 @@ Where did these notes come from? See the [README](README.md).
   - MacSweeper.
   - Research Mac vulnerabilities.
 
-## Mitigations
+### Mitigations
 
 - Patching
 - Data Execution Prevention
@@ -390,81 +391,93 @@ Where did these notes come from? See the [README](README.md).
 - Do not blame the user
   - Security is about protecting people, we should build technology that people can trust, not constantly blame users.
 
-# Cryptography, Authentication, Identity
+## Cryptography
 
-- Encryption vs Encoding vs Hashing vs Obfuscation vs Signing
-  - Be able to explain the differences between these things.
-  - [Various attack models](https://en.wikipedia.org/wiki/Attack_model) (e.g. chosen-plaintext attack).
-
-- Encryption standards + implementations
+- Explain key differences between Encryption vs Encoding vs Hashing vs Obfuscation vs Signing
+- Encryption is for secrecy.
+  - Asymmetric: slow, uses "public" and "private" keys. Good for establishing a trusted connection.
+  - Symmetric: fast, uses one shared key. Protocols often use asymmetric to transfer symmetric key.
   - [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) (asymmetrical).
   - [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) (symmetrical).
-  - [ECC](https://en.wikipedia.org/wiki/EdDSA) (namely ed25519) (asymmetric).
-  - [Chacha/Salsa](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) (symmetric).
-
-- Asymmetric vs symmetric
-  - Asymmetric is slow, but good for establishing a trusted connection.
-  - Symmetric has a shared key and is faster. Protocols often use asymmetric to transfer symmetric key.
-  - Perfect forward secrecy - eg Signal uses this.
-
+  - [ECC](https://en.wikipedia.org/wiki/EdDSA) (asymmetrical).
+  - [Chacha/Salsa](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) (symmetrical).
+- Encoding is for compatibility.
+  - URL encoding, Base64, ASCII [encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding).
+- Hashing is for integrity.
+  - Fixed length "fingerprints".
+  - MD5, SHA1, SHA256.
+- Obfuscation is for hindrance.
+  - Superficial changes while preserving functionality.
+  - Unnecessary encoding (e.g. Base64), unconventional formatting (e.g. removing all whitespace).
+- Signing is for authenticity.
+  - Elliptic curve cryptography.
+  - "Stamp" a hash of the data using a private key, verify with corresponding public key.
+- [Various attack models](https://en.wikipedia.org/wiki/Attack_model) (e.g. chosen-plaintext attack).
+- Public Key Infrastructure (PKI)
+  - Infra to manage key handling for establishing trust.
+  - Key exchange algorithms: Diffie-Hellman (DH) algorithm and its elliptic curve variant (ECDH)
+- Forward Secrecy
+  - End-to-End encryption for instant messaging apps, using [key management algorithms](https://en.wikipedia.org/wiki/Double_Ratchet_Algorithm).
+  - Preserves the secrecy of past messages: a different encryption key is used for each message.
+  - After asymmetric public key exchange, a new single-use symmetric key is used for each message.
 - Cyphers
   - Block vs stream [ciphers](https://en.wikipedia.org/wiki/Cipher).
   - [Block cipher modes of operation](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation).
   - [AES-GCM](https://en.wikipedia.org/wiki/Galois/Counter_Mode).
-
 - Integrity and authenticity primitives
   - [Hashing functions](https://en.wikipedia.org/wiki/Cryptographic_hash_function) e.g. MD5, Sha-1, BLAKE. Used for identifiers, very useful for fingerprinting malware samples.
   - [Message Authentication Codes (MACs)](https://en.wikipedia.org/wiki/Message_authentication_code).
   - [Keyed-hash MAC (HMAC)](https://en.wikipedia.org/wiki/HMAC).
-
 - Entropy
   - PRNG (pseudo random number generators).
   - Entropy buffer draining.
   - Methods of filling entropy buffer.
 
-- Authentication
-  - Certificates
-    - What info do certs contain, how are they signed?
-    - Look at DigiNotar.
-  - Trusted Platform Module
-    - (TPM)
-    - Trusted storage for certs and auth data locally on device/host.
-  - O-auth
-    - Bearer tokens, this can be stolen and used, just like cookies.
-  - Auth Cookies
-    - Client side.
-  - Sessions
-    - Server side.
-  - Auth systems
-    - SAMLv2o.
-    - OpenID.
-    - Kerberos.
-      - Gold & silver tickets.
-      - Mimikatz.
-      - Pass-the-hash.
-  - Biometrics
-    - Can't rotate unlike passwords.
-  - Password management
-    - Rotating passwords (and why this is bad).
-    - Different password lockers.
-  - U2F / FIDO
-    - Eg. Yubikeys.
-    - Helps prevent successful phishing of credentials.
-  - Compare and contrast multi-factor auth methods.
+## Authentication
 
-- Identity
-  - Access Control Lists (ACLs)
-    - Control which authenicated users can access which resources.
-  - Service accounts vs User accounts
-    - Robot accounts or Service accounts are used for automation.
-    - Service accounts should have heavily restricted priviledges.
-    - Understanding how Service accounts are used by attackers is important for understanding Cloud security.  
-  - impersonation
-    - Exported account keys.
-    - ActAs, JWT (JSON Web Token) in Cloud.
-  - Federated identity
+- Certificates
+  - What info do certs contain, how are they signed?
+  - Look at DigiNotar.
+- Trusted Platform Module
+  - (TPM)
+  - Trusted storage for certs and auth data locally on device/host.
+- O-auth
+  - Bearer tokens, this can be stolen and used, just like cookies.
+- Auth Cookies
+  - Client side.
+- Sessions
+  - Server side.
+- Auth systems
+  - SAMLv2o.
+  - OpenID.
+  - Kerberos.
+    - Gold & silver tickets.
+    - Mimikatz.
+    - Pass-the-hash.
+- Biometrics
+  - Can't rotate unlike passwords.
+- Password management
+  - Rotating passwords (and why this is bad).
+  - Different password lockers.
+- U2F / FIDO
+  - Eg. Yubikeys.
+  - Helps prevent successful phishing of credentials.
+- Compare and contrast multi-factor auth methods.
 
-# Malware & Reversing
+## Identity
+
+- Access Control Lists (ACLs)
+  - Control which authenticated users can access which resources.
+- Service accounts vs User accounts
+  - Robot accounts or Service accounts are used for automation.
+  - Service accounts should have heavily restricted privileges.
+  - Understanding how Service accounts are used by attackers is important for understanding Cloud security.  
+- impersonation
+  - Exported account keys.
+  - ActAs, JWT (JSON Web Token) in Cloud.
+- Federated identity
+
+## Malware & Reversing
 
 - Interesting malware
   - Conficker.
@@ -496,7 +509,7 @@ Where did these notes come from? See the [README](README.md).
   - Reverse.it.
   - Hybrid Analysis.
 
-# Exploits
+## Exploits
 
 - Three ways to attack - Social, Physical, Network
   - **Social**
@@ -544,7 +557,7 @@ Where did these notes come from? See the [README](README.md).
   - Google the version number of anything to look for exploits.
   - Hak5 tools.
 
-# Attack Structure
+## Attack Structure
 
 Practice describing security concepts in the context of an attack. These categories are a rough guide on attack structure for a targeted attack. Non-targeted attacks tend to be a bit more "all-in-one".
 
@@ -603,7 +616,7 @@ Practice describing security concepts in the context of an attack. These categor
   - Defacement.
   - Denial of service, shutdown/reboot systems.
 
-# Threat Modelling
+## Threat Modelling
 
 - When to do threat modelling?
   - When features / bugs need to be prioritized and negotiated.
@@ -629,15 +642,15 @@ Practice describing security concepts in the context of an attack. These categor
   - DREAD risk assessment
     - **D**amage potential
     - **R**eproducibility
-  - **E**xploitability
-  - **A**ffected Users
-  - **D**iscoverability
+    - **E**xploitability
+    - **A**ffected Users
+    - **D**iscoverability
   - DREAD obsolete?
     - Measures are subjective, takes too much effort
   - PASTA, TRIKE, OCTAVE, MAESTRO...
 - [Excellent talk](https://www.youtube.com/watch?v=vbwb6zqjZ7o) on "Defense Against the Dark Arts" by Lilly Ryan (contains *many* Harry Potter spoilers)
 
-# Detection
+## Detection
 
 - IDS
   - Intrusion Detection System (signature based (eg. snort) or behaviour based).
@@ -696,7 +709,7 @@ Practice describing security concepts in the context of an attack. These categor
   - Zeek.
 - A curated list of [awesome threat detection](https://github.com/0x4D31/awesome-threat-detection) resources
 
-# Digital Forensics
+## Digital Forensics
 
 - Evidence volatility (network vs memory vs disk)
 
@@ -738,7 +751,7 @@ Practice describing security concepts in the context of an attack. These categor
 - Chain of custody
   - Handover notes
 
-# Incident Management
+## Incident Management
 
 - Privacy incidents vs information security incidents
 - Know when to talk to legal, users, managers, directors.
@@ -769,7 +782,7 @@ Practice describing security concepts in the context of an attack. These categor
     - SANS' PICERL (Preparation, Identification, Containement, Eradication, Recovery, Lessons learned)
     - Google's IMAG (Incident Management At Google)
 
-# Coding & Algorithms
+## Coding & Algorithms
 
 - The basics
   - Conditions (if, else).
@@ -811,7 +824,7 @@ Practice describing security concepts in the context of an attack. These categor
   - Pros and cons of Python vs C, Java, etc.
   - Understand common functions very well, be comfortable in the language.
 
-## Security Themed Coding Challenges
+### Security Themed Coding Challenges
 
 These security engineering challenges focus on text parsing and manipulation, basic data structures, and simple logic flows. Give the challenges a go, no need to finish them to completion because all practice helps.
 
